@@ -33,10 +33,15 @@ export default function Container() {
     const handleChange = (e) => {
         setValue(e.target.value)
         setIsFiltered(true)
+        // const regex = new RegExp(`${e.target.value}`, 'gi');
         setFilteredPosts(posts.filter((data) => {
             const regex = new RegExp(`${e.target.value}`, 'gi');
             return data.language.match(regex);
         }))
+
+        // setFilteredPosts(posts.filter((data) => {
+        //     return data.tags.includes(e.target.value)
+        // }))
     }
 
     return (
