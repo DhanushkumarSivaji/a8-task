@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    display:'flex',
+    flex:1
   },
   bullet: {
     display: 'inline-block',
@@ -26,7 +28,8 @@ export default function Posts({ data }) {
   const classes = useStyles();
   
   return (
-    <Grid item xs={6} sm={3}>
+    <Grid item xs={6} sm={3} style={{display:'flex'}}>
+      <div style={{display:'flex'}}>
       <Card className={classes.root} variant="outlined">
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -41,6 +44,7 @@ export default function Posts({ data }) {
           ))}
         </CardContent>
       </Card>
+      </div>
     </Grid>
 
   );

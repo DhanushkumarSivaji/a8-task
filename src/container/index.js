@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { Container } from '@material-ui/core';
 import Posts from '../components/posts'
 import Pagination from '../components/pagination'
 import Search from '../components/search'
 
 
-export default function Container() {
+export default function Main() {
     const [value, setValue] = useState('')
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([])
@@ -33,28 +34,34 @@ export default function Container() {
     const handleChange = (e) => {
         setValue(e.target.value)
         setIsFiltered(true)
-        // const regex = new RegExp(`${e.target.value}`, 'gi');
+        // // const regex = new RegExp(`${e.target.value}`, 'gi');
+        // setFilteredPosts(posts.filter((data) => {
+        //     const regex = new RegExp(`${e.target.value}`, 'gi');
+        //     return data.language.match(regex);
+        // }))
+        // eslint-disable-next-line
         setFilteredPosts(posts.filter((data) => {
             const regex = new RegExp(`${e.target.value}`, 'gi');
-            return data.language.match(regex);
+            const matches = data.tags.filter((tag) => tag.match(regex))
+            if(matches.length > 0) {
+                return true;
+              }
         }))
-
-        // setFilteredPosts(posts.filter((data) => {
-        //     return data.tags.includes(e.target.value)
-        // }))
     }
 
     return (
         <div>
+            <Container>
             <Search onChange={handleChange} value={value} />
             { filteredPosts.length > 0 ? <Posts data={currentPosts} /> : <Posts data={currentPosts} />}
-            <div style={{marginTop:'20px'}}>
+            <div style={{marginTop:'40px'}}>
             <Pagination
                 postsPerPage={postsPerPage}
                 totalPosts={isFiltered ? filteredPosts.length : posts.length}
                 paginate={paginate}
             />
             </div>
+            </Container>
         </div>
     )
 }
